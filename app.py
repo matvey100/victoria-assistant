@@ -1,3 +1,15 @@
+'''
+Прототип голосового помощника
+Для работы требуются следующие зависимости: pip install pyaudio wikipedia-api google pyttsx3 chardet SpeechRecognition
+Также требуется установить следующие библиотеки из репозитория https://github.com/RHVoice/RHVoice/blob/master/doc/ru/Binaries.md
+SAPI 5 для Windows / NVDA для Linux и Macintosh
+    Языковой пакет Английский
+    Аглийский - Evgeniy-eng
+    Русский - Anna
+
+All rights reserved.
+2022
+'''
 # from vosk import Model, KaldiRecognizer  # оффлайн-распознавание от Vosk
 import speech_recognition  # распознавание пользовательской речи (Speech-To-Text)
 # import wave  # создание и чтение аудиофайлов формата wav
