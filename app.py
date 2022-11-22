@@ -46,7 +46,7 @@ def record_and_recognize_audio(*args: tuple):
         recognizer.adjust_for_ambient_noise(microphone, duration=2)
         try:
             print("Listening...")
-            audio = recognizer.listen(microphone, 5, 5)
+            audio = recognizer.listen(microphone, 10, 15)
         except speech_recognition.WaitTimeoutError:
             print("Can you check if your microphone is on, please?")
             return
