@@ -222,7 +222,7 @@ if __name__ == "__main__":
         # os.remove("microphone-results.wav")
         print(voice_input)
 
-        # отделение команд от дополнительной информации (аргументов)
+        # отделение комманд от дополнительной информации (аргументов)
         voice_input = voice_input.split(" ")
         command = voice_input[0]
         command_options = [str(input_part) for input_part in voice_input[1:len(voice_input)]]
