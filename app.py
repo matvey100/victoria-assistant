@@ -4,7 +4,7 @@
 Также требуется установить следующие библиотеки из репозитория https://github.com/RHVoice/RHVoice/blob/master/doc/ru/Binaries.md
 SAPI 5 для Windows / NVDA для Linux и Macintosh
     * Языковой пакет Английский
-    * Аглийский - Evgeniy-eng
+    * Английский - Evgeniy-eng
     * Русский - Anna
 
 All rights reserved.
@@ -22,21 +22,21 @@ import webbrowser  # Работа с браузером
 import traceback  # вывод traceback без остановки работы программы при отлове исключений
 import wikipediaapi  # найти в википедии
 import random  # модуль рандомайзера
-# import googletrans  # модуль переводчика
+from deep_translator import GoogleTranslator  # модуль переводчика
 
-'''Инициализация синтеза речи'''
+"""Инициализация синтеза речи"""
 tts = pyttsx3.init()
-voices = tts.getProperty('voices')
+voices = tts.getProperty("voices")
 # Задать голос по умолчанию
-tts.setProperty('voice', 'ru')
+tts.setProperty("voice", "ru")
 # Попробовать установить предпочтительный голос
 for voice in voices:
-    ru = voice.id.find('RHVoice\Anna')  # Найти Анну от RHVoice
+    ru = voice.id.find("RHVoice\Anna")  # Найти Анну от RHVoice
     if ru > -1:  # если нашли, выбираем этот голос
-        tts.setProperty('voice', voice.id)
+        tts.setProperty("voice", voice.id)
 
-tts.say('Привет, Создатель!')
-tts.runAndWait()
+# tts.say("Привет, Создатель!")
+# tts.runAndWait()
 
 
 def play_voice_assistant_speech(text_to_speech):
@@ -71,6 +71,7 @@ def record_and_recognize_audio(*args: tuple):
         # в случае проблем с доступом в Интернет происходит выброс ошибки
         except speech_recognition.RequestError:
             print("Check your Internet Connection, please")
+            play_voice_assistant_speech("Пожалуйста, проверьте соединение с Интернетом!")
         return recognized_data
 
 
@@ -92,8 +93,8 @@ def search_for_video_on_youtube(*args: tuple):
 
 def play_greetings(*args: tuple):
     """Приветствие пользователя"""
-    print('Привет, пользователь! Я - голосовой помощник Виктория. Чем я могу пом+очь вам?')
-    play_voice_assistant_speech('Привет, пользователь! Я - голосовой помощник Виктория. Чем я могу пом+очь вам?')
+    print("Привет, пользователь! Я - голосовой помощник Виктория. Чем я могу помочь вам?")
+    play_voice_assistant_speech("Привет, пользователь! Я - голосовой помощник Виктория. Чем я могу пом+очь вам?")
 
 
 def play_farewell_and_quit(*args: tuple):
@@ -117,7 +118,7 @@ def search_for_term_on_google(*args: tuple):
     # try:
     #     for _ in search(search_term,  # что искать
     #                     tld="com",  # верхнеуровневый домен
-    #                     lang='ru',  # используется язык, на котором говорит ассистент
+    #                     lang="ru",  # используется язык, на котором говорит ассистент
     #                     num=1,  # количество результатов на странице
     #                     start=0,  # индекс первого извлекаемого результата
     #                     stop=1,  # индекс последнего извлекаемого результата (я хочу, чтобы открывался первый результат)
@@ -132,8 +133,8 @@ def search_for_term_on_google(*args: tuple):
     #     traceback.print_exc()
     #     return
     # print(search_results)
-    print('Вот что я нашла по запросу {}.'.format(search_term))
-    play_voice_assistant_speech('Вот что я нашла по запросу {}.'.format(search_term))
+    print("Вот что я нашла по запросу {}.".format(search_term))
+    play_voice_assistant_speech("Вот что я нашла по запросу {}.".format(search_term))
 
 
 def search_for_definition_on_wikipedia(*args: tuple):
@@ -142,7 +143,7 @@ def search_for_definition_on_wikipedia(*args: tuple):
     if not args[0]: return
     search_term = " ".join(args[0])
     # установка языка (в данном случае используется язык, на котором говорит ассистент)
-    wiki = wikipediaapi.Wikipedia('ru')
+    wiki = wikipediaapi.Wikipedia("ru")
     # поиск страницы по запросу, чтение summary, открытие ссылки на страницу для получения подробной информации
     wiki_page = wiki.page(search_term)
     try:
@@ -170,17 +171,17 @@ def search_for_definition_on_wikipedia(*args: tuple):
 def flip_a_coin(*args: tuple):
     l = random.randint(0, 2)
     if l == 0:
-        print('Орёл!')
-        play_voice_assistant_speech('Орёл!')
+        print("Орёл!")
+        play_voice_assistant_speech("Орёл!")
     else:
-        print('Решка!')
-        play_voice_assistant_speech('Решка!')
+        print("Решка!")
+        play_voice_assistant_speech("Решка!")
     return
 
 
 def name_trigger(*args: tuple):
-    print('Чем я могу пом+очь?')
-    play_voice_assistant_speech('Чем я могу пом+очь?')
+    print("Чем я могу помочь?")
+    play_voice_assistant_speech("Чем я могу пом+очь?")
 
 
 def execute_command_with_name(command_name: str, *args: list):
@@ -197,17 +198,54 @@ def execute_command_with_name(command_name: str, *args: list):
             pass
 
 
-'''Команды для помощника'''
+def insert_context(command):
+    """
+    Извлечение кодового слова из строки
+    :param command:
+    :return:
+    """
+    s = command.split()
+    if s[0] == "найди" and (s[1] == "видео" or s[1] == "определение" or s[1] == "перевод" or s[1] == "ютуб"):
+        s = s[1::]
+    elif s[0] == "найди" and s[1] == "в" and (s[2] == "википедии" or s[2] == "ютубе" or s[2] == "google" or s[2] == "гугл" or s[2] == "youtube"):
+        s = s[2::]
+    else: pass
+    new = " ".join(s)
+    return new
+
+
+def get_translation(*args: tuple):
+    """
+    Переводчик
+    :param args:
+    :return:
+    """
+    print("Запускаю навык 'Перевод'!")
+    play_voice_assistant_speech("Запускаю навык 'Перевод'!")
+    play_voice_assistant_speech("Говорите целевой язык.")
+    lang = record_and_recognize_audio()
+    if lang == "русский":
+        target = "ru"
+    else:
+        target = "en"
+    play_voice_assistant_speech("Говорите фразу для перевода.")
+    to_translate = record_and_recognize_audio()
+    translated = GoogleTranslator(source='auto', target=target).translate(to_translate)
+    print(translated)
+    play_voice_assistant_speech(translated)
+    return
+
+
+"""Команды для помощника"""
 commands = {
-    ('подбрось', 'heads'): flip_a_coin,
-    ("hello", "hi", "morning", "привет"): play_greetings,
-    ("bye", "goodbye", "quit", "exit", "stop", "пока", 'хватит'): play_farewell_and_quit,
-    ('victoria', 'вика', 'виктория'): name_trigger,
-    ("search", "google", "find", "найди"): search_for_term_on_google,
-    ("video", "youtube", "watch", "видео", 'ютуб'): search_for_video_on_youtube,
-    ("wikipedia", "definition", "about", "определение", "википедия"): search_for_definition_on_wikipedia,
-    # ("translate", "interpretation", "translation", "перевод", "перевести", "переведи"): get_translation,
-    # ("weather", "forecast", "погода", "прогноз"): get_weather_forecast
+    ("подбрось", "heads"): flip_a_coin,
+    ("hello", "hi", "morning", "привет", "здорова", "хэй"): play_greetings,
+    ("bye", "goodbye", "quit", "exit", "stop", "пока", "хватит", "стоп"): play_farewell_and_quit,
+    ("victoria", "help", "вика", "виктория", "помощь"): name_trigger,
+    ("search", "google", "find", "найди", "погода", "прогноз", "гугл"): search_for_term_on_google,
+    ("video", "youtube", "watch", "видео", "ютуб"): search_for_video_on_youtube,
+    ("wikipedia", "definition", "about", "определение", "википедия", "википедии"): search_for_definition_on_wikipedia,
+    ("translate", "interpretation", "translation", "перевод", "перевести", "переведи"): get_translation,
 }
 
 if __name__ == "__main__":
@@ -223,7 +261,10 @@ if __name__ == "__main__":
         print(voice_input)
 
         # отделение комманд от дополнительной информации (аргументов)
-        voice_input = voice_input.split(" ")
-        command = voice_input[0]
-        command_options = [str(input_part) for input_part in voice_input[1:len(voice_input)]]
-        execute_command_with_name(command, command_options)
+        if len(voice_input) != 0:
+            voice_input = insert_context(voice_input)
+            voice_input = voice_input.split(" ")
+            command = voice_input[0]
+            command_options = [str(input_part) for input_part in voice_input[1:len(voice_input)]]
+            execute_command_with_name(command, command_options)
+        else: pass
