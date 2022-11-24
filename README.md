@@ -1,6 +1,8 @@
 Прототип голосового помощника
 
-Для работы требуются следующие зависимости: pip install pyaudio wikipedia-api google pyttsx3 chardet SpeechRecognition deep-translator
+Для работы требуются следующие зависимости: 
+
+pip install pyaudio wikipedia-api google pyttsx3 chardet SpeechRecognition deep-translator
 
 Также требуется установить следующие библиотеки из репозитория https://github.com/RHVoice/RHVoice/blob/master/doc/ru/Binaries.md
 
