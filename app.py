@@ -1,6 +1,6 @@
 """
 Прототип голосового помощника
-Для работы требуются следующие зависимости: pip install pyaudio wikipedia-api google pyttsx3 chardet SpeechRecognition
+Для работы требуются следующие зависимости: pip install pyaudio wikipedia-api google pyttsx3 chardet SpeechRecognition deep-translator
 Также требуется установить следующие библиотеки из репозитория https://github.com/RHVoice/RHVoice/blob/master/doc/ru/Binaries.md
 SAPI 5 для Windows / NVDA для Linux и Macintosh
     * Языковой пакет Английский
@@ -10,15 +10,9 @@ SAPI 5 для Windows / NVDA для Linux и Macintosh
 All rights reserved.
 2022
 """
-# from vosk import Model, KaldiRecognizer  # оффлайн-распознавание от Vosk
 import speech_recognition  # распознавание пользовательской речи (Speech-To-Text)
-# import wave  # создание и чтение аудиофайлов формата wav
-# import json  # работа с json-файлами и json-строками
-# import os  # работа с файловой системой
 import pyttsx3  # Синтез речи
 import webbrowser  # Работа с браузером
-# import chardet  # определение языка речи
-# from googlesearch import search  # поиск в google
 import traceback  # вывод traceback без остановки работы программы при отлове исключений
 import wikipediaapi  # найти в википедии
 import random  # модуль рандомайзера
@@ -34,9 +28,6 @@ for voice in voices:
     ru = voice.id.find("RHVoice\Anna")  # Найти Анну от RHVoice
     if ru > -1:  # если нашли, выбираем этот голос
         tts.setProperty("voice", voice.id)
-
-# tts.say("Привет, Создатель!")
-# tts.runAndWait()
 
 
 def play_voice_assistant_speech(text_to_speech):
@@ -92,13 +83,17 @@ def search_for_video_on_youtube(*args: tuple):
 
 
 def play_greetings(*args: tuple):
-    """Приветствие пользователя"""
+    """
+    Приветствие пользователя
+    """
     print("Привет, пользователь! Я - голосовой помощник Виктория. Чем я могу помочь вам?")
     play_voice_assistant_speech("Привет, пользователь! Я - голосовой помощник Виктория. Чем я могу пом+очь вам?")
 
 
 def play_farewell_and_quit(*args: tuple):
-    """Проигрывание прощальной речи и выход"""
+    """
+    Проигрывание прощальной речи и выход
+    """
     print("До свидания! Хорошего дня!")
     play_voice_assistant_speech("До свидания! Хорошего дня!")
     tts.stop()
@@ -106,8 +101,10 @@ def play_farewell_and_quit(*args: tuple):
 
 
 def search_for_term_on_google(*args: tuple):
-    """Поиск в Google с автоматическим открытием ссылок (на список результатов и на сами результаты, если возможно)
-    :param args: фраза поискового запроса"""
+    """
+    Поиск в Google с автоматическим открытием ссылок (на список результатов и на сами результаты, если возможно)
+    :param args: фраза поискового запроса
+    """
     if not args[0]: return
     search_term = " ".join(args[0])
     # открытие ссылки в браузере
@@ -138,8 +135,10 @@ def search_for_term_on_google(*args: tuple):
 
 
 def search_for_definition_on_wikipedia(*args: tuple):
-    """Поиск в Wikipedia определения с последующим озвучиванием результатов и открытием ссылок
-    :param args: фраза поискового запроса"""
+    """
+    Поиск в Wikipedia определения с последующим озвучиванием результатов и открытием ссылок
+    :param args: фраза поискового запроса
+    """
     if not args[0]: return
     search_term = " ".join(args[0])
     # установка языка (в данном случае используется язык, на котором говорит ассистент)
@@ -236,7 +235,10 @@ def get_translation(*args: tuple):
     return
 
 
-"""Команды для помощника"""
+"""
+Команды для помощника
+(пока только для русского языка)
+"""
 commands = {
     ("подбрось", "heads"): flip_a_coin,
     ("hello", "hi", "morning", "привет", "здорова", "хэй"): play_greetings,
@@ -257,7 +259,6 @@ if __name__ == "__main__":
         # старт записи речи с последующим выводом распознанной речи
         # и удалением записанного в микрофон аудио
         voice_input = record_and_recognize_audio()
-        # os.remove("microphone-results.wav")
         print(voice_input)
 
         # отделение комманд от дополнительной информации (аргументов)
