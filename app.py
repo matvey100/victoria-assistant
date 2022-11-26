@@ -244,7 +244,7 @@ commands = {
     ("hello", "hi", "morning", "привет", "здорова", "хэй"): play_greetings,
     ("bye", "goodbye", "quit", "exit", "stop", "пока", "хватит", "стоп"): play_farewell_and_quit,
     ("victoria", "help", "вика", "виктория", "помощь"): name_trigger,
-    ("search", "google", "find", "найди", "погода", "прогноз", "гугл"): search_for_term_on_google,
+    ("search", "google", "find", "найди", "погода", "прогноз", "гугл", "интернет", "интернете"): search_for_term_on_google,
     ("video", "youtube", "watch", "видео", "ютуб"): search_for_video_on_youtube,
     ("wikipedia", "definition", "about", "определение", "википедия", "википедии"): search_for_definition_on_wikipedia,
     ("translate", "interpretation", "translation", "перевод", "перевести", "переведи"): get_translation,
