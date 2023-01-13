@@ -8,7 +8,7 @@ SAPI 5 для Windows / NVDA для Linux и Macintosh
     * Русский - Anna
 
 All rights reserved.
-2022
+2023
 """
 import speech_recognition  # распознавание пользовательской речи (Speech-To-Text)
 import pyttsx3  # Синтез речи
