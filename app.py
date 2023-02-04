@@ -259,7 +259,7 @@ if __name__ == "__main__":
         # старт записи речи с последующим выводом распознанной речи
         # и удалением записанного в микрофон аудио
         voice_input = record_and_recognize_audio()
-        print(voice_input)
+        # print(voice_input)
 
         # отделение комманд от дополнительной информации (аргументов)
         if len(voice_input) != 0:
