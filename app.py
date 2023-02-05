@@ -1,13 +1,16 @@
 """
-Прототип голосового помощника
-Для работы требуются следующие зависимости: pip install pyaudio wikipedia-api google pyttsx3 chardet SpeechRecognition deep-translator
-Также требуется установить следующие библиотеки из репозитория https://github.com/RHVoice/RHVoice/blob/master/doc/ru/Binaries.md
-SAPI 5 для Windows / NVDA для Linux и Macintosh
-    * Языковой пакет Английский
-    * Английский - Evgeniy-eng
-    * Русский - Anna
+Prototype of a voice assistant
 
-All rights reserved.
+The following dependencies are required to work:
+pip install pyaudio wikipedia-api google pyttsx3 chardet SpeechRecognition deep-translator
+
+You also need to install the following libraries from RHVoice repositories (https://github.com/RHVoice/RHVoice/blob/master/doc/ru/Binaries.md):
+SAPI 5 for Windows / NVDA for Linux and Macintosh
+   * Language Pack English
+   * English — Evgeniy-eng
+   * Russian — Anna
+
+All rights reserved
 2023
 """
 import speech_recognition  # распознавание пользовательской речи (Speech-To-Text)
