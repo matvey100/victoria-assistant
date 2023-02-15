@@ -184,20 +184,20 @@ def flip_a_coin(*args: tuple):
 def name_trigger(*args: tuple):
     print("Чем я могу помочь?")
     play_voice_assistant_speech("Чем я могу пом+очь?")
-    
+
     print(
-    "Доступные команды: ",
-    "Приветствие:                Привет",
-    "Помощь (выводит это меню):  Помощь; Виктория",
-    "Закончить разговор:         Пока; Хватит; Стоп",
-    "Подбросить монетку:         Подбрось монетку; Heads or tails",
-    "Запустить переводчик:       Перевод; Перевести; Переведи",
-    "Искать в Google:            Найди; гугл; <запрос>",
-    "Искать в Википедии:         Найди в википедии; википедия; <запрос>",
-    "Искать в Ютуб:              ютуб; youtube <запрос>",
-    "(Продолжение следует...)",
-sep="\n"
-)
+        "Доступные команды: ",
+        "Приветствие:                Привет",
+        "Помощь (выводит это меню):  Помощь; Виктория",
+        "Закончить разговор:         Пока; Хватит; Стоп",
+        "Подбросить монетку:         Подбрось монетку; Heads or tails",
+        "Запустить переводчик:       Перевод; Перевести; Переведи",
+        "Искать в Google:            Найди; гугл; <запрос>",
+        "Искать в Википедии:         Найди в википедии; википедия; <запрос>",
+        "Искать в Ютуб:              ютуб; youtube <запрос>",
+        "(Продолжение следует...)",
+        sep="\n"
+    )
 
 
 def execute_command_with_name(command_name: str, *args: list):
@@ -223,9 +223,11 @@ def insert_context(command):
     s = command.split()
     if s[0] == "найди" and (s[1] == "видео" or s[1] == "определение" or s[1] == "перевод" or s[1] == "ютуб"):
         s = s[1::]
-    elif s[0] == "найди" and s[1] == "в" and (s[2] == "википедии" or s[2] == "ютубе" or s[2] == "google" or s[2] == "гугл" or s[2] == "youtube"):
+    elif s[0] == "найди" and s[1] == "в" and (
+            s[2] == "википедии" or s[2] == "ютубе" or s[2] == "google" or s[2] == "гугл" or s[2] == "youtube"):
         s = s[2::]
-    else: pass
+    else:
+        pass
     new = " ".join(s)
     return new
 
@@ -261,12 +263,12 @@ commands = {
     ("hello", "hi", "morning", "привет", "здорова", "хэй"): play_greetings,
     ("bye", "goodbye", "quit", "exit", "stop", "пока", "хватит", "стоп"): play_farewell_and_quit,
     ("victoria", "help", "вика", "виктория", "помощь"): name_trigger,
-    ("search", "google", "find", "найди", "погода", "прогноз", "гугл", "интернет", "интернете"): search_for_term_on_google,
+    ("search", "google", "find", "найди", "погода", "прогноз", "гугл", "интернет",
+     "интернете"): search_for_term_on_google,
     ("video", "youtube", "watch", "видео", "ютуб"): search_for_video_on_youtube,
     ("wikipedia", "definition", "about", "определение", "википедия", "википедии"): search_for_definition_on_wikipedia,
     ("translate", "interpretation", "translation", "перевод", "перевести", "переведи", "переводчик"): get_translation,
 }
-
 
 print("Привет, пользователь! Я - голосовой помощник Виктория. Вот что я могу.")
 play_voice_assistant_speech("Привет, пользователь! Я - голосовой помощник Виктория. Вот что я могу.")
@@ -282,9 +284,8 @@ print(
     "Искать в Википедии:         Найди в википедии; википедия; <запрос>",
     "Искать в Ютуб:              ютуб; youtube <запрос>",
     "(Продолжение следует...)",
-sep="\n"
+    sep="\n"
 )
-
 
 if __name__ == "__main__":
     # инициализация инструментов распознавания и ввода речи
@@ -304,4 +305,5 @@ if __name__ == "__main__":
             command = voice_input[0]
             command_options = [str(input_part) for input_part in voice_input[1:len(voice_input)]]
             execute_command_with_name(command, command_options)
-        else: pass
+        else:
+            pass
