@@ -214,13 +214,13 @@ def execute_command_with_name(command_name: str, *args: list):
             pass
 
 
-def insert_context(command):
+def insert_context(text):
     """
     Извлечение кодового слова из строки
-    :param command:
+    :param text:
     :return:
     """
-    s = command.split()
+    s = text.split()
     if s[0] == "найди" and (s[1] == "видео" or s[1] == "определение" or s[1] == "перевод" or s[1] == "ютуб"):
         s = s[1::]
     elif s[0] == "найди" and s[1] == "в" and (
