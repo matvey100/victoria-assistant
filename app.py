@@ -20,6 +20,7 @@ import traceback  # вывод traceback без остановки работы 
 import wikipediaapi  # найти в википедии
 import random  # модуль рандомайзера
 from deep_translator import GoogleTranslator  # модуль переводчика
+import subprocess  # модуль запуска сторонних программ
 
 """Инициализация синтеза речи"""
 tts = pyttsx3.init()
@@ -52,7 +53,7 @@ def record_and_recognize_audio(*args: tuple):
         recognizer.adjust_for_ambient_noise(microphone, duration=2)
         try:
             print("Listening...")
-            audio = recognizer.listen(microphone, 10, 15)
+            audio = recognizer.listen(microphone, 5, 10)
         except speech_recognition.WaitTimeoutError:
             print("Can you check if your microphone is on, please?")
             return
@@ -195,6 +196,7 @@ def name_trigger(*args: tuple):
         "Искать в Google:            Найди; гугл; <запрос>",
         "Искать в Википедии:         Найди в википедии; википедия; <запрос>",
         "Искать в Ютуб:              ютуб; youtube <запрос>",
+        "Запустить программу:        Запусти; открой <блокнот, калькулятор, браузер, проводник, paint, wordpad>",
         "(Продолжение следует...)",
         sep="\n"
     )
@@ -254,6 +256,44 @@ def get_translation(*args: tuple):
     return
 
 
+def open_app(*args: tuple):
+    """
+    Отрыть одну из стандартных программ Windows
+    """
+    apps = {
+        ("блокнот", "notepad"): "notepad",
+        ("калькулятор", "calculator"): "calc",
+        ("браузер", "browser"): "browser",
+        ("wordpad", "вордпад"): "write",
+        ("пэйнт", "paint"): "mspaint",
+        ("проводник", "explorer"): "explorer"
+    }
+
+    args = ''.join(args[0])
+
+    error = 0
+
+    for key in apps.keys():
+        if args in key:
+            if apps[key] != "browser":
+                subprocess.Popen(apps[key])
+                print(f'Запускаю {args}...')
+                play_voice_assistant_speech(f'Запускаю {args}...')
+                break
+            else:
+                webbrowser.open('https://google.com')
+                print(f'Запускаю {args}...')
+                play_voice_assistant_speech(f'Запускаю {args}...')
+                break
+        else: error += 1
+
+    if error >= len(apps):
+        print('Извините, такие программы пока не поддерживаются...')
+        play_voice_assistant_speech('Извините, такие программы пока не поддерживаются.')
+
+    return
+
+
 """
 Команды для помощника
 (пока только для русского языка)
@@ -268,6 +308,7 @@ commands = {
     ("video", "youtube", "watch", "видео", "ютуб"): search_for_video_on_youtube,
     ("wikipedia", "definition", "about", "определение", "википедия", "википедии"): search_for_definition_on_wikipedia,
     ("translate", "interpretation", "translation", "перевод", "перевести", "переведи", "переводчик"): get_translation,
+    ("открой", "запусти", "start", "run"): open_app
 }
 
 print("Привет, пользователь! Я - голосовой помощник Виктория. Вот что я могу.")
@@ -283,6 +324,7 @@ print(
     "Искать в Google:            Найди; гугл; <запрос>",
     "Искать в Википедии:         Найди в википедии; википедия; <запрос>",
     "Искать в Ютуб:              ютуб; youtube <запрос>",
+    "Запустить программу:        Запусти; открой <блокнот, калькулятор, браузер, проводник, paint, wordpad>",
     "(Продолжение следует...)",
     sep="\n"
 )
