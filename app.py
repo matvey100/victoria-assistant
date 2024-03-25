@@ -11,7 +11,7 @@ pip install pyaudio wikipedia-api google pyttsx3 chardet SpeechRecognition deep-
        * Русский — Anna
 
 All rights reserved
-2023
+2024
 """
 import speech_recognition  # распознавание пользовательской речи (Speech-To-Text)
 import pyttsx3  # Синтез речи
