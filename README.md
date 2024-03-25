@@ -15,4 +15,4 @@
 <h4><a href="https://github.com/matvey100/victoria-assistant/releases/">Программа для Windows</a></h4>
 
 All rights reserved<br />
-2023
+2024
